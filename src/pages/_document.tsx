@@ -5,6 +5,7 @@ export default function Document() {
   return (
     <Html lang="pt-br">
       <Head>
+      
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -15,8 +16,12 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" type="image/png" href="/favicon.png" />
 
-        <style id="stitches" dangerouslySetInnerHTML={{__html: getCssText()}}/>
+        <style
+          id="stitches"
+          dangerouslySetInnerHTML={{ __html: getCssText() }}
+        />
       </Head>
       <body>
         <Main />
