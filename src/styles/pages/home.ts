@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { styled } from "..";
 
+export const Wrapper = styled("div", {
+  position: "relative"
+})
+
 export const HomeContainer = styled("main", {
   display: "flex",
   width: "100%",
@@ -8,6 +12,7 @@ export const HomeContainer = styled("main", {
   marginLeft: "auto",
   height: "calc(100vh - 7.5rem - 2rem)", // 100vh - header height - margin
 });
+
 export const Product = styled(Link, {
   background: "linear-gradient(180deg, #1ea483 0%, #7465d4 100%)",
   borderRadius: 8,
@@ -45,7 +50,7 @@ export const Product = styled(Link, {
 
     strong: {
       fontSize: "$lg",
-      color: '$gray100'
+      color: "$gray100",
     },
 
     span: {
@@ -61,3 +66,8 @@ export const Product = styled(Link, {
     },
   },
 });
+
+export const ArrowContainer = styled("div", {
+  position: "absolute",
+  top: 0
+})
