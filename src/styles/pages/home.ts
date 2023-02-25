@@ -2,7 +2,8 @@ import Link from "next/link";
 import { styled } from "..";
 
 export const Wrapper = styled("div", {
-  position: "relative"
+  position: "relative",
+  marginLeft: "auto"
 })
 
 export const HomeContainer = styled("main", {
@@ -67,7 +68,3 @@ export const Product = styled(Link, {
   },
 });
 
-export const ArrowContainer = styled("div", {
-  position: "absolute",
-  top: 0
-})

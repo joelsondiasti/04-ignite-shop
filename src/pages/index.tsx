@@ -1,4 +1,4 @@
-import { ArrowContainer, HomeContainer, Product, Wrapper } from "@/styles/pages/home";
+import { HomeContainer, Product, Wrapper } from "@/styles/pages/home";
 import Image from "next/image";
 
 import "keen-slider/keen-slider.min.css";
@@ -43,8 +43,17 @@ export default function Home({ products }: HomeProps) {
       <Head>
         <title>Home | Ignite Shop</title>
       </Head>
-      
-      
+
+      {loaded && instanceRef.current && (
+        <ArrowNavigation
+          direction="left"
+          onClick={(e: any) =>
+            e.stopPropagation() || instanceRef.current?.prev()
+          }
+          disabled={currentSlide === 0}
+        />
+      )}
+
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => (
           <Product
@@ -60,31 +69,21 @@ export default function Home({ products }: HomeProps) {
             </footer>
           </Product>
         ))}
-       
       </HomeContainer>
-      <ArrowContainer>
-        {loaded && instanceRef.current && (
-          <>
-            <ArrowNavigation
-              direction="left"
-              onClick={(e: any) =>
-                e.stopPropagation() || instanceRef.current?.prev()
-              }
-              disabled={currentSlide === 0}
-            />
-            <ArrowNavigation
-              direction="right"
-              onClick={(e: any) =>
-                e.stopPropagation() || instanceRef.current?.next()
-              }
-              disabled={
-                currentSlide ===
-                instanceRef.current.track.details.slides.length - 3
-              }
-            />
-          </>
-        )}
-      </ArrowContainer> 
+
+  
+      {loaded && instanceRef.current && (
+        <ArrowNavigation
+          direction="right"
+          onClick={(e: any) =>
+            e.stopPropagation() || instanceRef.current?.next()
+          }
+          disabled={
+            currentSlide === instanceRef.current.track.details.slides.length - 3
+          }
+        />
+      )}
+      
     </Wrapper>
   );
 }
