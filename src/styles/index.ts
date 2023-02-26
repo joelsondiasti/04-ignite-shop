@@ -7,6 +7,7 @@ export const { config, css, styled, globalCss, keyframes, getCssText } =
         white: "#fff",
 
         gray900: "#121214",
+        gray700: "#191915",
         gray800: "#202024",
         gray400: "#8d8d99",
         gray300: "#c4c4cc",

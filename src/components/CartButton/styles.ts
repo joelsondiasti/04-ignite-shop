@@ -1,6 +1,7 @@
 import { styled } from "@/styles";
+import * as Dialog from "@radix-ui/react-dialog";
 
-export const ButtonContainer = styled("button", {
+export const ButtonContainer = styled(Dialog.Trigger, {
   marginRight: "1rem",
   background: "$gray800",
   color: "$gray400",
@@ -9,10 +10,10 @@ export const ButtonContainer = styled("button", {
   borderRadius: 6,
   position: "relative",
   cursor: "pointer",
-  
+
   "&:hover": {
     filter: "brightness(1.2)",
-    transition: "filter 0.5s"
+    transition: "filter 0.5s",
   },
 
   span: {
