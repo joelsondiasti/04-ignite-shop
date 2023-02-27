@@ -1,4 +1,9 @@
-import { HomeContainer, Product, Wrapper } from "@/styles/pages/home";
+import {
+  CartButton,
+  HomeContainer,
+  Product,
+  Wrapper,
+} from "@/styles/pages/home";
 import Image from "next/image";
 
 import "keen-slider/keen-slider.min.css";
@@ -9,15 +14,19 @@ import { stripe } from "@/lib/stripe";
 import { formatPrice } from "@/utils/formatprice";
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import { Handbag } from "phosphor-react";
 import { useState } from "react";
 import Stripe from "stripe";
+import { useShoppingCart } from "use-shopping-cart";
 
 interface HomeProps {
   products: {
     id: string;
     name: string;
-    imageUrl: string;
-    price: string;
+    image: string;
+    description: string;
+    price: number;
+    currency: "BRL";
   }[];
 }
 
@@ -38,6 +47,15 @@ export default function Home({ products }: HomeProps) {
     },
   });
 
+  const { addItem } = useShoppingCart();
+
+  const productList = products.map((product) => {
+    return {
+      item: { ...product, sku: product.id },
+      price: formatPrice(product.price / 100),
+    };
+  });
+
   return (
     <Wrapper>
       <Head>
@@ -55,23 +73,27 @@ export default function Home({ products }: HomeProps) {
       )}
 
       <HomeContainer ref={sliderRef} className="keen-slider">
-        {products.map((product) => (
+        {productList.map(({item, price}) => (
           <Product
             className="keen-slider__slide"
-            href={`/product/${product.id}`}
-            key={product.id}
+            href={`/product/${item.id}`}
+            key={item.id}
             prefetch={false}
           >
-            <Image src={product.imageUrl} width={520} height={480} alt="" />
+            <Image src={item.image} width={520} height={480} alt="" />
             <footer>
-              <strong>{product.name}</strong>
-              <span>{product.price}</span>
+              <div>
+                <strong>{item.name}</strong>
+                <span>{price}</span>
+              </div>
+              <CartButton onClick={() => addItem(item)}>
+                <Handbag size={32} />
+              </CartButton>
             </footer>
           </Product>
         ))}
       </HomeContainer>
 
-  
       {loaded && instanceRef.current && (
         <ArrowNavigation
           direction="right"
@@ -83,7 +105,6 @@ export default function Home({ products }: HomeProps) {
           }
         />
       )}
-      
     </Wrapper>
   );
 }
@@ -97,9 +118,10 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       id: product.id,
       name: product.name,
-      imageUrl: product.images[0],
-      // @ts-ignore
-      price: formatPrice(price.unit_amount / 100),
+      image: product.images[0],
+      description: product.description,
+      price: price.unit_amount,
+      currency: "BRL",
     };
   });
   return { props: { products }, revalidate: 60 * 60 * 2 }; // 2hours

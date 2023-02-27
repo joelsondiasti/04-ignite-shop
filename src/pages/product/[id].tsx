@@ -9,50 +9,55 @@ import {
   Spinner,
 } from "@/styles/pages/product";
 import { formatPrice } from "@/utils/formatprice";
-import axios from "axios";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import Stripe from "stripe";
+import { useShoppingCart } from "use-shopping-cart";
 
 interface ProductProps {
   product: {
     id: string;
     name: string;
-    imageUrl: string;
-    price: string;
+    image: string;
     description: string;
-    defaultPriceId: string;
+    price: number;
+    currency: "BRL";
   };
 }
 
 export default function Product({ product }: ProductProps) {
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false);
-  async function handleBuyProduct() {
-    try {
-      setIsCreatingCheckoutSession(true);
-      const response = await axios.post("/api/checkout", {
-        priceId: product.defaultPriceId,
-      });
+  // async function handleBuyProduct() {
+  //   try {
+  //     setIsCreatingCheckoutSession(true);
+  //     const response = await axios.post("/api/checkout", {
+  //       priceId: product.defaultPriceId,
+  //     });
 
-      const { checkoutUrl } = response.data;
+  //     const { checkoutUrl } = response.data;
 
-      // Se for enviar o cliente para uma rota de checkout interna utilize:
-      // const router = useRouter()
-      // router.push('/checkout')
+  //     // Se for enviar o cliente para uma rota de checkout interna utilize:
+  //     // const router = useRouter()
+  //     // router.push('/checkout')
 
-      // Como o caso de uso dessa aplicação é uma rota externa. Utilize:
-      window.location.href = checkoutUrl;
-    } catch (err) {
-      //Conectar uma ferramenta de observalidade (Datadog / Sentry)
-      setIsCreatingCheckoutSession(false);
-      alert("Falha ao redirecionar para o checkout");
-    }
-  }
-
+  //     // Como o caso de uso dessa aplicação é uma rota externa. Utilize:
+  //     window.location.href = checkoutUrl;
+  //   } catch (err) {
+  //     //Conectar uma ferramenta de observalidade (Datadog / Sentry)
+  //     setIsCreatingCheckoutSession(false);
+  //     alert("Falha ao redirecionar para o checkout");
+  //   }
+  // }
+  const item = {
+    ...product,
+    sku: product.id,
+    price: formatPrice(product.price / 100),
+  };
+  const { addItem } = useShoppingCart();
   const { isFallback } = useRouter();
 
   if (isFallback) {
@@ -72,26 +77,26 @@ export default function Product({ product }: ProductProps) {
   return (
     <>
       <Head>
-        <title>{product.name} | Ignite Shop</title>
+        <title>{item.name} | Ignite Shop</title>
       </Head>
       <ProductContainer>
         <ImageContainer>
-          <Image src={product.imageUrl} width={520} height={480} alt="" />
+          <Image src={item.image} width={520} height={480} alt="" />
         </ImageContainer>
         <ProductDetails>
-          <h1>{product.name}</h1>
-          <span>{product.price}</span>
+          <h1>{item.name}</h1>
+          <span>{item.price}</span>
 
-          <p>{product.description}</p>
+          <p>{item.description}</p>
 
           <button
             disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
+            onClick={() => addItem({ ...product, sku: product.id })}
           >
             {isCreatingCheckoutSession ? (
               <Spinner size={16} />
             ) : (
-              "Comprar agora"
+              "Colocar na sacola"
             )}
           </button>
         </ProductDetails>
@@ -122,11 +127,10 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
       product: {
         id: product.id,
         name: product.name,
-        imageUrl: product.images[0],
-        // @ts-ignore
-        price: formatPrice(price.unit_amount / 100),
+        image: product.images[0],
         description: product.description,
-        defaultPriceId: price.id,
+        price: price.unit_amount,
+        currency: "BRL",
       },
     },
     revalidate: 60 * 60 * 1, // 1 hour

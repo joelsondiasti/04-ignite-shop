@@ -3,8 +3,8 @@ import { styled } from "..";
 
 export const Wrapper = styled("div", {
   position: "relative",
-  marginLeft: "auto"
-})
+  marginLeft: "auto",
+});
 
 export const HomeContainer = styled("main", {
   display: "flex",
@@ -49,15 +49,19 @@ export const Product = styled(Link, {
     opacity: 0,
     transition: "all 0.2s ease-in-out",
 
-    strong: {
-      fontSize: "$lg",
-      color: "$gray100",
-    },
+    div: {
+      display: "flex",
+      flexDirection: "column",
+      strong: {
+        fontSize: "$lg",
+        color: "$gray100",
+      },
 
-    span: {
-      fontSize: "$xl",
-      fontWeight: "bold",
-      color: "$green300",
+      span: {
+        fontSize: "$xl",
+        fontWeight: "bold",
+        color: "$green300",
+      },
     },
   },
   "&:hover": {
@@ -68,3 +72,17 @@ export const Product = styled(Link, {
   },
 });
 
+
+export const CartButton = styled("button", {
+ background: "$green500",
+ padding: "0.75rem", 
+ borderRadius: 6,
+ border: "none",
+ color: "$white", 
+ cursor: "pointer",
+
+ "&:hover":{
+  background: "$green300",
+  transition: "background 0.5s ease-in-out"
+ }
+})

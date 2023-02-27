@@ -17,10 +17,10 @@ export const { config, css, styled, globalCss, keyframes, getCssText } =
         green300: "#00b37e",
       },
       fontSizes: {
-        md: "1.125rem",
-        lg: "1.25rem",
-        xl: "1.5rem",
-        "2xl": "2rem",
+        md: "1.125rem", // 18
+        lg: "1.25rem",  // 20
+        xl: "1.5rem",   // 24
+        "2xl": "2rem",  // 32
       },
     },
   });

@@ -17,9 +17,11 @@ export const ButtonContainer = styled(Dialog.Trigger, {
   },
 
   span: {
+    width: 24,
+    height: 24,
     position: "absolute",
-    right: "-5px",
-    top: "-5px",
+    left: 31,
+    top: "-7px",
     background: "$green500",
     color: "$gray300",
     borderRadius: "50%",
