@@ -9,11 +9,11 @@ import {
   Scrollbar,
 } from "./styles";
 
+
 export function CartList() {
   const { cartDetails, removeItem } = useShoppingCart();
   const cartArray = Object.values(cartDetails!);
 
-  console.log(cartArray.length);
   return (
     <ScrollRoot>
       <Content>

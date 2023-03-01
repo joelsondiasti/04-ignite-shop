@@ -27,6 +27,7 @@ interface HomeProps {
     image: string;
     description: string;
     price: number;
+    price_id: string;
     currency: "BRL";
   }[];
 }
@@ -119,6 +120,7 @@ export const getStaticProps: GetStaticProps = async () => {
       image: product.images[0],
       description: product.description,
       price: price.unit_amount,
+      price_id: price.id,
       currency: "BRL",
     };
   });

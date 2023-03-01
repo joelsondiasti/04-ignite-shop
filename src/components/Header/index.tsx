@@ -16,7 +16,6 @@ export function Header() {
     amount += product.quantity;
     return amount;
   }, 0);
-  console.log(amount);
 
   return (
     <HeaderContainer>

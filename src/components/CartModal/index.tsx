@@ -1,5 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
+import axios from "axios";
 import { SmileySad, X } from "phosphor-react";
+import { useState } from "react";
 import { useShoppingCart } from "use-shopping-cart";
 import { CartList } from "../CartList";
 import {
@@ -16,7 +18,29 @@ interface CartModalProps {
 }
 
 export function CartModal({ openState }: CartModalProps) {
-  const { formattedTotalPrice, cartCount } = useShoppingCart();
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false);
+  const { formattedTotalPrice, clearCart, cartCount, cartDetails } =
+    useShoppingCart();
+
+  async function handleCheckout() {
+    try {
+      setIsCreatingCheckoutSession(true);
+
+      const response = await axios.post("/api/checkout", { cartDetails });
+
+      const { checkoutUrl } = response.data;
+
+      // Se houver rota de saída limpa o carrinho
+      checkoutUrl && clearCart();
+      // Como o caso de uso dessa aplicação é uma rota externa. Utilize:
+      window.location.href = checkoutUrl;
+    } catch (err) {
+      //Conectar uma ferramenta de observalidade (Datadog / Sentry)
+      setIsCreatingCheckoutSession(false);
+      alert("Falha ao redirecionar para o checkout");
+    }
+  }
 
   let cartQuantityString = (quantity?: number) => {
     if (quantity === 0 || undefined) return "-";
@@ -53,7 +77,9 @@ export function CartModal({ openState }: CartModalProps) {
                 </div>
               </Details>
 
-              <CheckoutButton>Finalizar compra</CheckoutButton>
+              <CheckoutButton onClick={() => handleCheckout()}>
+                Finalizar compra
+              </CheckoutButton>
             </>
           ) : (
             <EmptyCart>
@@ -63,7 +89,6 @@ export function CartModal({ openState }: CartModalProps) {
               </h3>
             </EmptyCart>
           )}
-          
         </Content>
       </Modal>
     </Dialog.Portal>
