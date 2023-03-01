@@ -1,8 +1,6 @@
 import { styled } from "@/styles";
 import * as Dialog from "@radix-ui/react-dialog";
 
-
-
 export const Overlay = styled(Dialog.Overlay, {
   position: "fixed",
   top: 0,
@@ -69,17 +67,14 @@ export const Content = styled("div", {
     lineHeight: 1.6,
     color: "$gray100",
   },
+ 
 });
-
-
-
 
 export const Details = styled("div", {
   display: "flex",
   flexDirection: "column",
   gap: "1rem",
   marginTop: "auto",
-  
 
   div: {
     display: "flex",
@@ -120,13 +115,37 @@ export const CheckoutButton = styled("button", {
   fontSize: "$md",
   fontWeight: 700,
 
-//   position: "absolute",
-//   bottom: 0, 
-//   left: "3rem",
-//   right: "3rem",
+  //   position: "absolute",
+  //   bottom: 0,
+  //   left: "3rem",
+  //   right: "3rem",
 
   "&:hover": {
     background: "$green300",
     transition: "background 0.5s",
+  },
+});
+
+export const EmptyCart = styled("div", {
+  // display: "flex",
+  // flexDirection: "column",
+  // flex: 1,
+
+  display: "flex",
+  justifyContent: "center",
+  flexDirection: "column",
+  alignItems: "center",
+
+
+  flex: 1,
+
+  width: "100%",
+  height: "100%",
+ 
+  color: "$gray900",
+
+  h3: {
+    fontSize: "$lg",
+    textAlign: "center"
   },
 });

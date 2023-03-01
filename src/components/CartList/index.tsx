@@ -1,43 +1,37 @@
-import camisa from "@/assets/camisetas/3.png";
-import * as ScrollArea from "@radix-ui/react-scroll-area";
 import Image from "next/image";
-import { CartItem, Content, ProductImage, ScrollRoot, ScrollThumb, Scrollbar } from "./styles";
+import { formatCurrencyString, useShoppingCart } from "use-shopping-cart";
+import {
+  CartItem,
+  Content,
+  ProductImage,
+  ScrollRoot,
+  ScrollThumb,
+  Scrollbar,
+} from "./styles";
 
 export function CartList() {
-  const camisas = [
-    {
-      id: 1,
-      name: "Camiseta Ignite Lab | ReactJS",
-      price: "R$ 59,90",
-      image: camisa,
-    },
-    {
-      id: 25,
-      name: "Camiseta Ignite Lab | ReactJS",
-      price: "R$ 70,00",
-      image: camisa,
-    },
-    {
-      id: 31,
-      name: "Camiseta Ignite Lab | ReactJS",
-      price: "R$ 42,20",
-      image: camisa,
-    },
-    
-  ];
+  const { cartDetails, removeItem } = useShoppingCart();
+  const cartArray = Object.values(cartDetails!);
+
+  console.log(cartArray.length);
   return (
     <ScrollRoot>
       <Content>
-        {camisas.map((camisa) => (
+        {cartArray.map((camisa) => (
           <CartItem key={camisa.id}>
             <ProductImage>
-              <Image src={camisa.image} width={94} height={94} alt="" />
+              <Image src={camisa.image!} width={94} height={94} alt="" />
             </ProductImage>
             <div>
               <h2>{camisa.name}</h2>
-              <span>{camisa.price}</span>
+              <span>
+                {formatCurrencyString({
+                  value: camisa.price,
+                  currency: camisa.currency,
+                })}
+              </span>
 
-              <button>Remover</button>
+              <button onClick={() => removeItem(camisa.id)}>Remover</button>
             </div>
           </CartItem>
         ))}
@@ -46,7 +40,6 @@ export function CartList() {
       <Scrollbar>
         <ScrollThumb />
       </Scrollbar>
-
     </ScrollRoot>
   );
 }

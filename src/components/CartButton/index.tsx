@@ -10,7 +10,7 @@ export function CartButton({ amount }: CartButtonProps) {
   return (
     <ButtonContainer hasAmount={!!amount}>
       <Handbag size={24} />
-      {amount && amount>0 && <span>{amount}</span>}
+      {amount! > 0 && <span>{amount}</span>}
     </ButtonContainer>
   );
 }

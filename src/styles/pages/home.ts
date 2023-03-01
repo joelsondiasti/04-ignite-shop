@@ -14,7 +14,7 @@ export const HomeContainer = styled("main", {
   height: "calc(100vh - 7.5rem - 2rem)", // 100vh - header height - margin
 });
 
-export const Product = styled(Link, {
+export const Product = styled("div", {
   background: "linear-gradient(180deg, #1ea483 0%, #7465d4 100%)",
   borderRadius: 8,
   cursor: "pointer",

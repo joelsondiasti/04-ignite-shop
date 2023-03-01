@@ -14,6 +14,7 @@ import { stripe } from "@/lib/stripe";
 import { formatPrice } from "@/utils/formatprice";
 import { GetStaticProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { Handbag } from "phosphor-react";
 import { useState } from "react";
 import Stripe from "stripe";
@@ -73,14 +74,11 @@ export default function Home({ products }: HomeProps) {
       )}
 
       <HomeContainer ref={sliderRef} className="keen-slider">
-        {productList.map(({item, price}) => (
-          <Product
-            className="keen-slider__slide"
-            href={`/product/${item.id}`}
-            key={item.id}
-            prefetch={false}
-          >
-            <Image src={item.image} width={520} height={480} alt="" />
+        {productList.map(({ item, price }) => (
+          <Product className="keen-slider__slide" key={item.id}>
+            <Link href={`/product/${item.id}`} prefetch={false}>
+              <Image src={item.image} width={520} height={480} alt="" />
+            </Link>
             <footer>
               <div>
                 <strong>{item.name}</strong>

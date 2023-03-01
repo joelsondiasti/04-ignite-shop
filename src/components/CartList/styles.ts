@@ -1,14 +1,14 @@
 import { styled } from "@/styles";
-import * as ScrollArea from '@radix-ui/react-scroll-area';
+import * as ScrollArea from "@radix-ui/react-scroll-area";
 
 const SCROLLBAR_SIZE = 10;
 
 export const ScrollRoot = styled(ScrollArea.Root, {
-    width:"100%",
-    minHeight: 225,
-    flex: 1,
-    paddingBottom: "1rem"
-})
+  width: "100%",
+  minHeight: 225,
+  flex: 1,
+  paddingBottom: "1rem",
+});
 
 export const Content = styled(ScrollArea.Viewport, {
   marginTop: "1rem",
@@ -16,10 +16,12 @@ export const Content = styled(ScrollArea.Viewport, {
   flexDirection: "column",
   gap: "1.5rem",
   flex: 1,
-  
+
   width: "100%",
   height: "100%",
+
   borderRadius: "inherit",
+  
 });
 
 export const CartItem = styled("div", {
@@ -67,38 +69,40 @@ export const ProductImage = styled("div", {
 });
 
 export const Scrollbar = styled(ScrollArea.Scrollbar, {
-    display: 'flex',
-    // ensures no selection
-    userSelect: 'none',
-    // disable browser handling of all panning and zooming gestures on touch devices
-    touchAction: 'none',
-    padding: 2,
-    background: "rgba(0,0,0,0.2)",
-    borderRadius: SCROLLBAR_SIZE,
-    transition: 'background 160ms ease-out',
-    '&:hover': { background: "rgba(0,0,0,0.6)" },
-    '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
-    '&[data-orientation="horizontal"]': {
-      flexDirection: 'column',
-      height: SCROLLBAR_SIZE,
-    },
-  });
-  
-  export const ScrollThumb = styled(ScrollArea.Thumb, {
-    flex: 1,
-    background: "$gray800",
-    borderRadius: SCROLLBAR_SIZE,
-    // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
-    position: 'relative',
-    '&::before': {
-      content: '""',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: '100%',
-      height: '100%',
-      minWidth: 44,
-      minHeight: 44,
-    },
-  });
+  display: "flex",
+  // ensures no selection
+  userSelect: "none",
+  // disable browser handling of all panning and zooming gestures on touch devices
+  touchAction: "none",
+  padding: 2,
+  background: "rgba(0,0,0,0.2)",
+  borderRadius: SCROLLBAR_SIZE,
+  transition: "background 160ms ease-out",
+  "&:hover": { background: "rgba(0,0,0,0.6)" },
+  '&[data-orientation="vertical"]': { width: SCROLLBAR_SIZE },
+  '&[data-orientation="horizontal"]': {
+    flexDirection: "column",
+    height: SCROLLBAR_SIZE,
+  },
+});
+
+export const ScrollThumb = styled(ScrollArea.Thumb, {
+  flex: 1,
+  background: "$gray800",
+  borderRadius: SCROLLBAR_SIZE,
+  // increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html
+  position: "relative",
+  "&::before": {
+    content: '""',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "100%",
+    height: "100%",
+    minWidth: 44,
+    minHeight: 44,
+  },
+});
+
+
