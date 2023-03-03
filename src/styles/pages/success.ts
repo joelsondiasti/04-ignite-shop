@@ -11,6 +11,7 @@ export const SuccessContainer = styled("main", {
   h1: {
     fontSize: "$2xl",
     color: "$gray100",
+    marginTop: "3rem",
   },
 
   ">img": {
@@ -65,9 +66,8 @@ export const ItemDisplayBox = styled("div", {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  marginTop: "4rem",
   height: 140,
-
+  marginLeft: 40,
 
   "& > div": {
     marginLeft: "-40px",

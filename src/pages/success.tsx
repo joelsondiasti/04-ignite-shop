@@ -13,13 +13,17 @@ import Stripe from "stripe";
 
 interface SuccessProps {
   customerName: string;
-  product: {
+  quantity: number;
+  products: {
     name: string;
-    imageUrl: string;
-  };
+    image: string;
+  }[];
 }
 
 export default function Success(props: SuccessProps) {
+  let productsToShow =
+    props.products.length > 3 ? props.products.slice(0, 3) : props.products;
+
   return (
     <>
       <Head>
@@ -28,38 +32,29 @@ export default function Success(props: SuccessProps) {
       </Head>
       <SuccessContainer>
         <Image src={logoImg} width={130} height={52} alt="" />
-        <h1>Compra efetuada!</h1>
+
         <ItemDisplayBox>
-          <span>+10</span>
-          <ImageContainer>
-            <Image
-              src={props.product.imageUrl}
-              width={115}
-              height={106}
-              alt=""
-            />
-          </ImageContainer>
-          <ImageContainer>
-            <Image
-              src={props.product.imageUrl}
-              width={115}
-              height={106}
-              alt=""
-            />
-          </ImageContainer>
-          <ImageContainer>
-            <Image
-              src={props.product.imageUrl}
-              width={115}
-              height={106}
-              alt=""
-            />
-          </ImageContainer>
+          {props.products.length > 3 && <span>+{props.quantity - 3}</span>}
+          
+          {productsToShow.map((product) => (
+            <ImageContainer>
+              <Image src={product.image} width={115} height={106} alt="" />
+            </ImageContainer>
+          ))}
         </ItemDisplayBox>
-        <p>
-          Uhuul <strong>{props.customerName}</strong>, sua{" "}
-          <strong>{props.product.name}</strong> já está a caminho da sua casa.
-        </p>
+        <h1>Compra efetuada!</h1>
+        {props.quantity > 1 ? (
+          <p>
+            Uhuul <strong>{props.customerName}</strong>, sua compra de{" "}
+            {props.quantity} camisas já <br /> está a caminho da sua casa.
+          </p>
+        ) : (
+          <p>
+            Uhuul <strong>{props.customerName}</strong>, sua{" "}
+            <strong>{props.products[0].name}</strong> já <br /> está a caminho
+            da sua casa.
+          </p>
+        )}
         <Link href="/">Voltar ao catálogo</Link>
       </SuccessContainer>
     </>
@@ -80,15 +75,28 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const session = await stripe.checkout.sessions.retrieve(sessionId, {
     expand: ["line_items", "line_items.data.price.product"],
   });
-  console.log(session);
+
   const customerName = session.customer_details?.name;
-  const products = session.line_items?.data ;
-  const quantityItems = products?.reduce()
+  const purchasedProducts = session.line_items?.data;
+
+  const quantityItems =
+    purchasedProducts?.reduce((total, current) => {
+      return total + current.quantity!;
+    }, 0) || 0;
+
+  const productsDetails = purchasedProducts?.map((product) => {
+    let detail = product.price?.product as Stripe.Product;
+    return {
+      name: detail.name,
+      image: detail.images[0],
+    };
+  });
 
   return {
     props: {
       customerName,
-      products,
+      quantity: quantityItems,
+      products: productsDetails,
     },
   };
 };
