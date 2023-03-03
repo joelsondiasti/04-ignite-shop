@@ -19,6 +19,7 @@ import { Handbag } from "phosphor-react";
 import { useState } from "react";
 import Stripe from "stripe";
 import { useShoppingCart } from "use-shopping-cart";
+import { Header } from "@/components/Header";
 
 interface HomeProps {
   products: {
@@ -63,6 +64,7 @@ export default function Home({ products }: HomeProps) {
       <Head>
         <title>Home | Ignite Shop</title>
       </Head>
+     
 
       {loaded && instanceRef.current && (
         <ArrowNavigation

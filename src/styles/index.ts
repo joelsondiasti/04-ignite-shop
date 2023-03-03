@@ -17,6 +17,7 @@ export const { config, css, styled, globalCss, keyframes, getCssText } =
         green300: "#00b37e",
       },
       fontSizes: {
+        sm: "0.75rem",   // 14
         md: "1.125rem", // 18
         lg: "1.25rem",  // 20
         xl: "1.5rem",   // 24

@@ -1,5 +1,10 @@
+import logoImg from "@/assets/logo.svg";
 import { stripe } from "@/lib/stripe";
-import { ImageContainer, SuccessContainer } from "@/styles/pages/success";
+import {
+  ImageContainer,
+  ItemDisplayBox,
+  SuccessContainer,
+} from "@/styles/pages/success";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -22,10 +27,35 @@ export default function Success(props: SuccessProps) {
         <meta name="robots" content="noindex" />
       </Head>
       <SuccessContainer>
+        <Image src={logoImg} width={130} height={52} alt="" />
         <h1>Compra efetuada!</h1>
-        <ImageContainer>
-          <Image src={props.product.imageUrl} width={115} height={106} alt="" />
-        </ImageContainer>
+        <ItemDisplayBox>
+          <span>+10</span>
+          <ImageContainer>
+            <Image
+              src={props.product.imageUrl}
+              width={115}
+              height={106}
+              alt=""
+            />
+          </ImageContainer>
+          <ImageContainer>
+            <Image
+              src={props.product.imageUrl}
+              width={115}
+              height={106}
+              alt=""
+            />
+          </ImageContainer>
+          <ImageContainer>
+            <Image
+              src={props.product.imageUrl}
+              width={115}
+              height={106}
+              alt=""
+            />
+          </ImageContainer>
+        </ItemDisplayBox>
         <p>
           Uhuul <strong>{props.customerName}</strong>, sua{" "}
           <strong>{props.product.name}</strong> já está a caminho da sua casa.
@@ -52,15 +82,13 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   });
   console.log(session);
   const customerName = session.customer_details?.name;
-  const product = session.line_items?.data[0].price?.product as Stripe.Product;
+  const products = session.line_items?.data ;
+  const quantityItems = products?.reduce()
 
   return {
     props: {
       customerName,
-      product: {
-        name: product.name,
-        imageUrl: product.images[0],
-      },
+      products,
     },
   };
 };

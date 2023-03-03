@@ -7,6 +7,7 @@ export const ArrowContainer = styled("button", {
   padding: "1rem",
   position: "absolute",
 
+
   "&:disabled": {
     display: "none",
   },

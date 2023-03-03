@@ -21,7 +21,6 @@ export const Content = styled(ScrollArea.Viewport, {
   height: "100%",
 
   borderRadius: "inherit",
-  
 });
 
 export const CartItem = styled("div", {
@@ -31,8 +30,6 @@ export const CartItem = styled("div", {
   marginBottom: "1.5rem",
 
   div: {
-    display: "flex",
-    flexDirection: "column",
 
     h2: {
       fontSize: "1.125rem",
@@ -42,8 +39,9 @@ export const CartItem = styled("div", {
     span: {
       fontSize: "1.125rem",
       fontWeight: 700,
-      marginTop: "0.2rem",
+      marginTop: "auto",
     },
+
     button: {
       background: "transparent",
       color: "$green500",
@@ -66,6 +64,34 @@ export const CartItem = styled("div", {
 export const ProductImage = styled("div", {
   background: "linear-gradient(100deg, #1ea483 0%, #7465d4 100%)",
   borderRadius: 8,
+  position: "relative",
+
+  span: {
+    fontSize: "$sm",
+    fontWeight: 400,
+    position: "absolute",
+    bottom: 4,
+    right: 4,
+    background: "red",
+    width: 24,
+    height: 24,
+    borderRadius: "50%",
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+export const PriceBox = styled("div", {
+
+  display: "flex",
+  alignItems: "center",
+  p: {
+    color: "$gray400",
+    fontSize: "$sm",
+    marginLeft: "1rem"
+  },
 });
 
 export const Scrollbar = styled(ScrollArea.Scrollbar, {
@@ -104,5 +130,3 @@ export const ScrollThumb = styled(ScrollArea.Thumb, {
     minHeight: 44,
   },
 });
-
-
